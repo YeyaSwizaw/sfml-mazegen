@@ -29,7 +29,7 @@ Author: Sam Sleight
 MAZEVIEWER_NS_BEGIN
 
 App::App() 
-	: solved(false) {
+	: genRequested(false), solveRequested(false), solved(false) {
 
 } // App::App();
 
@@ -40,7 +40,7 @@ void App::init() {
 
 	window.create(sf::VideoMode(16 * options.width, 16 * options.height), "Maze Viewer");
 		
-	newMap();
+	genRequested = true;
 
 } // void App::init();
 
@@ -56,51 +56,60 @@ void App::loop() {
 
 			else if(e.type == sf::Event::KeyPressed) {
 				if(e.key.code == sf::Keyboard::Key::N) {
-					newMap();
+					genRequested = true;
 
 				} // if(e.key.code == sf::Keyboard::n);
 
 				else if(e.key.code == sf::Keyboard::Key::S) {
-					solve();
+					solveRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard:Key::S);
 
 				else if(e.key.code == sf::Keyboard::Key::Num1) {
 					options.method = METHOD_PRIMS;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::1);
 				else if(e.key.code == sf::Keyboard::Key::Num2) {
 					options.method = METHOD_RECURSIVE_BT;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::2);
 
 				else if(e.key.code == sf::Keyboard::Key::K || e.key.code == sf::Keyboard::Key::Up) {
 					options.height += 1;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::K || e.key.code == sf::Keyboard::Key::Up);
 				else if(e.key.code == sf::Keyboard::Key::J || e.key.code == sf::Keyboard::Key::Down) {
 					options.height -= 1;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::J || e.key.code == sf::Keyboard::Key::Down);
 
 				else if(e.key.code == sf::Keyboard::Key::L || e.key.code == sf::Keyboard::Key::Right) {
 					options.width += 1;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::L || e.key.code == sf::Keyboard::Key::Right);
 				else if(e.key.code == sf::Keyboard::Key::H || e.key.code == sf::Keyboard::Key::Left) {
 					options.width -= 1;
-					newMap();
+					genRequested = true;
 
 				} // else if(e.key.code == sf::Keyboard::Key::H || e.key.code == sf::Keyboard::Key::Left);
 
 			} // else if(e.type == sf::Event::KeyPressed);
 
 		} // while(window.pollEvent(e));
+
+		if(genRequested) {
+			newMap();
+
+		} // if(genRequested);
+		if(solveRequested) {
+			solve();
+
+		} // if(solveRequested);
 
 		window.clear();
 		
@@ -116,7 +125,10 @@ void App::loop() {
 } // void App::loop();
 
 void App::newMap() {
+	genRequested = false;
+	solveRequested = false;
 	solved = false;
+
 	grid.clear();
 
 	maze.generate(options);
@@ -135,6 +147,8 @@ void App::newMap() {
 } // void App::newMap();
 
 void App::solve() {
+	solveRequested = false;
+
 	if(!solved) {
 		grid.clear();
 

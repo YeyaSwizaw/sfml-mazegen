@@ -51,6 +51,8 @@ private:
 	sf::View view;
 	sf::RenderWindow window;
 
+	bool genRequested, solveRequested;
+
 	void newMap();
 
 	bool solved;
