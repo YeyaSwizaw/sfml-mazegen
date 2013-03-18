@@ -20,8 +20,8 @@ Usage
 
 To use, simply run the program.
 
-'n' generates a new maze.
-'1' chooses prims
-'2' chooses recursive backtrack
-'hjkl' or arrows choose size
-'s' solves the maze
+- 'n' generates a new maze.
+- '1' chooses prims
+- '2' chooses recursive backtrack
+- 'hjkl' or arrows choose size
+- 's' solves the maze
