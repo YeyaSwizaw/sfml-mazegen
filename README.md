@@ -25,3 +25,5 @@ To use, simply run the program.
 - '2' chooses recursive backtrack
 - 'hjkl' or arrows choose size
 - 's' solves the maze
+- 'w' shows width dialog
+- 'x' shows height dialog

@@ -20,56 +20,53 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ***********
 Project: SFML Maze Generator
-File: src/inc/app.hpp
+File: src/inc/dialog.hpp
 Author: Sam Sleight
 ***********/
 
-#ifndef MAZEVIEWER_APP_HPP
-#define MAZEVIEWER_APP_HPP
+#ifndef MAZEVIEWER_DIALOG_HPP
+#define MAZEVIEWER_DIALOG_HPP
 
 #include "defines.hpp"
-#include "maze.hpp"
-#include "gridsquare.hpp"
-#include "dialog.hpp"
 
+#include <string>
+#include <sstream>
+
+#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
 MAZEVIEWER_NS_BEGIN
 
-class App {
-public:
-	App();
+enum DialogType {
+	DIALOG_WIDTH,
+	DIALOG_HEIGHT
 
-	void init();
-	void loop();
+}; // enum DialogType;
+
+class Dialog {
+public:
+	Dialog() = default;
+	Dialog(sf::Vector2u wndSize, sf::Font* font, int type);
+
+	void enterNumber(sf::String num);
+	int getValue();
+
+	void render(sf::RenderWindow* wndPtr);
 
 private:
-	sf::Font font;
+	int wndWidth, wndHeight;
 
-	MazeOptions options;
-	Maze maze;
+	void updatePositions();
 
-	Dialog* d;
+	sf::RectangleShape box;
 
-	std::vector<GridSquare> grid;
+	sf::Font *font;
+	sf::Text text;
 
-	sf::View view;
-	sf::RenderWindow window;
+	sf::String value;
 
-	bool widthDialog, heightDialog;
-
-	bool genRequested, solveRequested;
-
-	void showWidthDialog();
-	void showHeightDialog();
-
-	void newMap();
-
-	bool solved;
-	void solve();
-
-}; // class App;
+}; // class Dialog;
 
 MAZEVIEWER_NS_END
 
-#endif // MAZEVIEWER_APP_HPP
+#endif // MAZEVIEWER_DIALOG_HPP
