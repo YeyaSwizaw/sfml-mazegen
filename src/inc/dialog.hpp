@@ -49,6 +49,7 @@ public:
 	Dialog(sf::Vector2u wndSize, sf::Font* font, int type);
 
 	void enterNumber(sf::String num);
+	void backspace();
 	int getValue();
 
 	void render(sf::RenderWindow* wndPtr);

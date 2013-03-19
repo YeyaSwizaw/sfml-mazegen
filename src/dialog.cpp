@@ -65,6 +65,20 @@ void Dialog::enterNumber(sf::String num) {
 
 } // void Dialog::enterNumber(Sf::string num);
 
+void Dialog::backspace() {
+	if(!value.isEmpty()) {
+		value.erase(value.getSize() - 1);
+
+		sf::String t = text.getString();
+		t.erase(t.getSize() - 1);
+		text.setString(t);
+
+		updatePositions();
+
+	} // if(!value.isEmpty());
+
+} // void Dialog::backspace();
+
 int Dialog::getValue() {
 	std::string str = value.toAnsiString();
 

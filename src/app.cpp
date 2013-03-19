@@ -52,6 +52,7 @@ void App::loop() {
 	while(window.isOpen()) {
 		while(window.pollEvent(e)) {
 			if(e.type == sf::Event::Closed) {
+				delete d;
 				window.close();
 
 			} // if(e.type == sf::Event::Closed);
@@ -136,6 +137,11 @@ void App::loop() {
 						delete d;
 
 					} // if(e.key.code == sf::Keyboad::Key::Enter);
+
+					else if(e.key.code == sf::Keyboard::BackSpace) {
+						d->backspace();
+
+					} // else if(e.key.code == sf::Keyboard::Back);
 
 				} // else;
 
