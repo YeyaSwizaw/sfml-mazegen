@@ -60,6 +60,8 @@ private:
 
 	bool genRequested, solveRequested;
 
+	void pollEvents(); // events.cpp
+
 	void showWidthDialog();
 	void showHeightDialog();
 

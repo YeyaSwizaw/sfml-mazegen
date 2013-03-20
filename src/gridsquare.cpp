@@ -29,32 +29,32 @@ Author: Sam Sleight
 MAZEVIEWER_NS_BEGIN
 
 GridSquare::GridSquare(int x, int y, bool walls[4], bool inPath)
-	: xPos(x * 16), yPos(y * 16) {
+	: xPos(x * MAZEVIEWER_GRIDSQUARE_SIZE), yPos(y * MAZEVIEWER_GRIDSQUARE_SIZE) {
 
 	background.setPosition(xPos, yPos);
-	background.setSize(sf::Vector2f(16, 16));
+	background.setSize(sf::Vector2f(MAZEVIEWER_GRIDSQUARE_SIZE, MAZEVIEWER_GRIDSQUARE_SIZE));
 	background.setFillColor(inPath ? sf::Color(70, 100, 150) : sf::Color(100, 100, 100));
 
 	if(walls[NORTH]) {
 		lines.push_back(sf::RectangleShape());
 		lines.back().setPosition(xPos, yPos);
-		lines.back().setSize(sf::Vector2f(16, 1));
+		lines.back().setSize(sf::Vector2f(MAZEVIEWER_GRIDSQUARE_SIZE, 1));
 		lines.back().setFillColor(sf::Color::Black);
 
 	} // if(walls[NORTH]);
 
 	if(walls[EAST]) {
 		lines.push_back(sf::RectangleShape());
-		lines.back().setPosition(xPos + 15, yPos);
-		lines.back().setSize(sf::Vector2f(1, 16));
+		lines.back().setPosition(xPos + MAZEVIEWER_GRIDSQUARE_SIZE - 1, yPos);
+		lines.back().setSize(sf::Vector2f(1, MAZEVIEWER_GRIDSQUARE_SIZE));
 		lines.back().setFillColor(sf::Color::Black);
 
 	} // if(walls[EAST]);
 
 	if(walls[SOUTH]) {
 		lines.push_back(sf::RectangleShape());
-		lines.back().setPosition(xPos, yPos + 15);
-		lines.back().setSize(sf::Vector2f(16, 1));
+		lines.back().setPosition(xPos, yPos + MAZEVIEWER_GRIDSQUARE_SIZE - 1);
+		lines.back().setSize(sf::Vector2f(MAZEVIEWER_GRIDSQUARE_SIZE, 1));
 		lines.back().setFillColor(sf::Color::Black);
 
 	} // if(walls[SOUTH]);
@@ -62,7 +62,7 @@ GridSquare::GridSquare(int x, int y, bool walls[4], bool inPath)
 	if(walls[WEST]) {
 		lines.push_back(sf::RectangleShape());
 		lines.back().setPosition(xPos, yPos);
-		lines.back().setSize(sf::Vector2f(1, 16));
+		lines.back().setSize(sf::Vector2f(1, MAZEVIEWER_GRIDSQUARE_SIZE));
 		lines.back().setFillColor(sf::Color::Black);
 
 	} // if(walls[WEST]);
