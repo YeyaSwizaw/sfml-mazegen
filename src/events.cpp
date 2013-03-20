@@ -32,17 +32,17 @@ void App::pollEvents() {
 	sf::Event e;
 	while(window.pollEvent(e)) {
 		if(e.type == sf::Event::Closed) {
-			if(widthDialog || heightDialog) {
-				delete d;
+			if(infoBox || widthDialog || heightDialog) {
+				delete msgBox;
 
-			} // if(widthDialog || heightDialog);
+			} // if(infoBox);
 
 			window.close();
 
 		} // if(e.type == sf::Event::Closed);
 
 		else if(e.type == sf::Event::KeyPressed) {
-			if(widthDialog == false && heightDialog == false) {
+			if(widthDialog == false && heightDialog == false && infoBox == false) {
 				if(e.key.code == sf::Keyboard::Key::W) {
 					showWidthDialog();
 
@@ -51,6 +51,10 @@ void App::pollEvents() {
 					showHeightDialog();
 
 				} // else if(e.key.code == sf::Keyboard::Key::S);
+				else if(e.key.code == sf::Keyboard::Key::Return) {
+					showInfoBox();
+
+				} // else if(e.key.code == sf::Keyboard::Key::Return);
 
 				else if(e.key.code == sf::Keyboard::Key::N) {
 					genRequested = true;
@@ -99,31 +103,43 @@ void App::pollEvents() {
 
 			else {
 				if(e.key.code == sf::Keyboard::Key::Return) {
-					int val = d->getValue();
+					if(widthDialog || heightDialog) {
+						int val = static_cast<Dialog*>(msgBox)->getValue();
 
-					if(val != 0) {
-						if(widthDialog) {
-							options.width = val;
+						if(val != 0) {
+							if(widthDialog) {
+								options.width = val;
 
-						} // if(widthDialog);
-						else {
-							options.height = val;
+							} // if(widthDialog);
+							else {
+								options.height = val;
 
-						} // else;
+							} // else;
 
-						genRequested = true;
+							genRequested = true;
 
-					} // if(val != 0);
+						} // if(val != 0);
 
-					widthDialog = false;
-					heightDialog = false;
+						widthDialog = false;
+						heightDialog = false;
 
-					delete d;
+						delete msgBox;
+
+					} // if(widthDialog || heightDialog);
+					else {
+						infoBox = false;
+
+						delete msgBox;
+
+					} // else;
 
 				} // if(e.key.code == sf::Keyboad::Key::Enter);
 
 				else if(e.key.code == sf::Keyboard::BackSpace) {
-					d->backspace();
+					if(widthDialog || heightDialog) {
+						static_cast<Dialog*>(msgBox)->backspace();
+
+					} // if(widthDialog || heightDialog);
 
 				} // else if(e.key.code == sf::Keyboard::Back);
 
@@ -141,7 +157,7 @@ void App::pollEvents() {
 				} // while(it != val.end() && std::isdigit(*it));
 
 				if(!val.empty() && it == val.end()) {
-					d->enterNumber(sf::String(e.text.unicode));
+					static_cast<Dialog*>(msgBox)->enterNumber(sf::String(e.text.unicode));
 
 				} // if(!val.empty() && it == val.end());
 

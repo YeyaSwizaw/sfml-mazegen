@@ -29,7 +29,13 @@ Author: Sam Sleight
 MAZEVIEWER_NS_BEGIN
 
 App::App() 
-	: widthDialog(false), heightDialog(false), genRequested(false), solveRequested(false), solved(false) {
+	: infoBox(false),
+	  widthDialog(false), 
+	  heightDialog(false), 
+	  
+	  genRequested(false), 
+	  solveRequested(false), 
+	  solved(false) {
 
 	font.loadFromFile("pf_ronda_seven.ttf");
 
@@ -66,10 +72,10 @@ void App::loop() {
 
 		} // for(auto g : grid);
 
-		if(widthDialog || heightDialog) {
-			d->render(&window);
+		if(infoBox || widthDialog || heightDialog) {
+			msgBox->render(&window);
 
-		} // if(showWidthDialog || showHeightDialog);
+		} // if(infoBox);
 
 		window.display();
 
@@ -78,18 +84,29 @@ void App::loop() {
 } // void App::loop();
 
 void App::showWidthDialog() {
-	d = new Dialog(window.getSize(), &font, DIALOG_WIDTH);
+	msgBox = new Dialog("Enter Width: ", window.getSize(), &font);
 
 	widthDialog = true;
 
 } // void App::showWidthDialog();
 
 void App::showHeightDialog() {
-	d = new Dialog(window.getSize(), &font, DIALOG_HEIGHT);
+	msgBox = new Dialog("Enter Height: ", window.getSize(), &font);
 
 	heightDialog = true;
 
 } // void App::showHeightDialog();
+
+void App::showInfoBox() {
+	std::stringstream msgStream;
+
+	msgStream << "Size: " << options.width << "x" << options.height << "\nMethod: " 
+		<< (options.method == METHOD_PRIMS ? "Prims" : "Recursive Backtrack");
+
+	msgBox = new MessageBox(msgStream.str(), window.getSize(), &font);
+	infoBox = true;
+
+} // void App::showInfoBox();
 
 void App::newMap() {
 	genRequested = false;

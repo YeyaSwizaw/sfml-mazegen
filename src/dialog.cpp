@@ -28,31 +28,10 @@ Author: Sam Sleight
 
 MAZEVIEWER_NS_BEGIN
 
-Dialog::Dialog(sf::Vector2u wndSize, sf::Font* font, int type) {
-	wndWidth = wndSize.x;
-	wndHeight = wndSize.y;
+Dialog::Dialog(std::string msg, sf::Vector2u wndSize, sf::Font* font)
+	: MessageBox(msg, wndSize, font) {
 
-	this->font = font;
-	text.setFont(*font);
-	text.setCharacterSize(16);
-	text.setColor(sf::Color::Black);
-
-	if(type == DIALOG_WIDTH) {
-		text.setString("Enter Width: ");
-
-	} // if(type == DIALOG_WIDTH);
-	else {
-		text.setString("Enter Height: ");
-
-	} // else;
-
-	updatePositions();
-
-	box.setOutlineThickness(2);
-	box.setOutlineColor(sf::Color::Black);
-	box.setFillColor(sf::Color::White);
-
-} // Dialog::Dialog(sf::Vector2u wndSize, sf::Font* font, int type);
+} // Dialog::Dialog(std::string msg, sf::Vector2u wndSize, sf::Font* font);
 
 void Dialog::enterNumber(sf::String num) {
 	value.insert(value.getSize(), num);
@@ -88,19 +67,5 @@ int Dialog::getValue() {
 	return val;
 
 } // int Dialog::getValue();
-
-void Dialog::render(sf::RenderWindow* wndPtr) {
-	wndPtr->draw(box);
-	wndPtr->draw(text);
-
-} // void Dialog::render(sf::RenderWindow* wndPtr);
-
-void Dialog::updatePositions() {
-	text.setPosition((wndWidth / 2) - (text.getLocalBounds().width / 2), (wndHeight / 2) - (text.getLocalBounds().height / 2));
-
-	box.setSize(sf::Vector2f(text.getLocalBounds().width + 32, text.getLocalBounds().height + 32));
-	box.setPosition((wndWidth / 2) - (box.getSize().x / 2), (wndHeight / 2) - (box.getSize().y / 2));
-
-} // void Dialog::updatePositions();
 
 MAZEVIEWER_NS_END

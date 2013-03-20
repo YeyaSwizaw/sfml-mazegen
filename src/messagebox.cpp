@@ -20,37 +20,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ***********
 Project: SFML Maze Generator
-File: src/inc/dialog.hpp
+File: src/messagebox.cpp
 Author: Sam Sleight
 ***********/
 
-#ifndef MAZEVIEWER_DIALOG_HPP
-#define MAZEVIEWER_DIALOG_HPP
-
-#include "defines.hpp"
-#include "messagebox.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
+#include "inc/messagebox.hpp"
 
 MAZEVIEWER_NS_BEGIN
 
-class Dialog : public MessageBox {
-public:
-	Dialog(std::string msg, sf::Vector2u wndSize, sf::Font* font);
+MessageBox::MessageBox(std::string msg, sf::Vector2u wndSize, sf::Font* font) {
+	wndWidth = wndSize.x;
+	wndHeight = wndSize.y;
 
-	void enterNumber(sf::String num);
-	void backspace();
-	int getValue();
+	this->font = font;
+	text.setFont(*font);
+	text.setCharacterSize(16);
+	text.setColor(sf::Color::Black);
+	text.setString(msg);
 
-private:
-	sf::String value;
+	box.setOutlineThickness(2);
+	box.setOutlineColor(sf::Color::Black);
+	box.setFillColor(sf::Color::White);
 
-}; // class Dialog;
+	updatePositions();
+
+} // MessageBox::MessageBox(std::string msg, sf::Vector2u wndSize, sf::Font* font);
+
+void MessageBox::render(sf::RenderWindow* wndPtr) {
+	wndPtr->draw(box);
+	wndPtr->draw(text);
+
+} // void MessageBox::render(sf::RenderWindow* wndPtr);
+
+void MessageBox::updatePositions() {
+	text.setPosition((wndWidth / 2) - (text.getLocalBounds().width / 2), (wndHeight / 2) - (text.getLocalBounds().height / 2));
+
+	box.setSize(sf::Vector2f(text.getLocalBounds().width + 32, text.getLocalBounds().height + 32));
+	box.setPosition((wndWidth / 2) - (box.getSize().x / 2), (wndHeight / 2) - (box.getSize().y / 2));
+
+} // void MessageBox::updatePositions();
 
 MAZEVIEWER_NS_END
-
-#endif // MAZEVIEWER_DIALOG_HPP

@@ -30,7 +30,11 @@ Author: Sam Sleight
 #include "defines.hpp"
 #include "maze.hpp"
 #include "gridsquare.hpp"
+#include "messagebox.hpp"
 #include "dialog.hpp"
+
+#include <string>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -49,6 +53,7 @@ private:
 	MazeOptions options;
 	Maze maze;
 
+	MessageBox* msgBox;
 	Dialog* d;
 
 	std::vector<GridSquare> grid;
@@ -56,7 +61,7 @@ private:
 	sf::View view;
 	sf::RenderWindow window;
 
-	bool widthDialog, heightDialog;
+	bool infoBox, widthDialog, heightDialog;
 
 	bool genRequested, solveRequested;
 
@@ -64,6 +69,7 @@ private:
 
 	void showWidthDialog();
 	void showHeightDialog();
+	void showInfoBox();
 
 	void newMap();
 

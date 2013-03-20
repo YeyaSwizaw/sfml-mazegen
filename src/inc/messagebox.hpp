@@ -20,37 +20,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ***********
 Project: SFML Maze Generator
-File: src/inc/dialog.hpp
+File: src/inc/messagebox.hpp
 Author: Sam Sleight
 ***********/
 
-#ifndef MAZEVIEWER_DIALOG_HPP
-#define MAZEVIEWER_DIALOG_HPP
+#ifndef MAZEVIEWER_MESSAGEBOX_HPP
+#define MAZEVIEWER_MESSAGEBOX_HPP
 
 #include "defines.hpp"
-#include "messagebox.hpp"
 
 #include <string>
-#include <sstream>
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
 MAZEVIEWER_NS_BEGIN
 
-class Dialog : public MessageBox {
+class MessageBox {
 public:
-	Dialog(std::string msg, sf::Vector2u wndSize, sf::Font* font);
+	MessageBox(std::string msg, sf::Vector2u wndSize, sf::Font* font);
 
-	void enterNumber(sf::String num);
-	void backspace();
-	int getValue();
+	void render(sf::RenderWindow* wndPtr);
 
-private:
-	sf::String value;
+protected:
+	int wndWidth, wndHeight;
 
-}; // class Dialog;
+	void updatePositions();
+
+	sf::RectangleShape box;
+
+	sf::Font *font;
+	sf::Text text;
+
+}; // class MessageBox;
 
 MAZEVIEWER_NS_END
 
-#endif // MAZEVIEWER_DIALOG_HPP
+#endif // MAZEVIEWER_MESSAGEBOX_HPP
