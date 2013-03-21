@@ -70,6 +70,7 @@ private:
 	void showWidthDialog();
 	void showHeightDialog();
 	void showInfoBox();
+	void showHelpBox();
 
 	void newMap();
 

@@ -55,6 +55,10 @@ void App::pollEvents() {
 					showInfoBox();
 
 				} // else if(e.key.code == sf::Keyboard::Key::Return);
+				else if(e.key.code == sf::Keyboard::Key::Slash) {
+					showHelpBox();
+
+				} // else if(e.key.code == sf::Keyboard::Key::Slash);
 
 				else if(e.key.code == sf::Keyboard::Key::N) {
 					genRequested = true;

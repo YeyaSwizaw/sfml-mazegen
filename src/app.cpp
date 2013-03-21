@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ***********
 Project: SFML Maze Generator
-File: src/maze.cpp
+File: src/app.cpp
 Author: Sam Sleight
 ***********/
 
@@ -108,6 +108,21 @@ void App::showInfoBox() {
 
 } // void App::showInfoBox();
 
+void App::showHelpBox() {
+	std::string msg = "arrows / 'hjkl' - change size\n"
+		"'1' - choose prims\n"
+		"'2' - choose recursive backtrack\n"
+		"'n' - new maze\n"
+		"'s' - solve maze\n"
+		"'w' - input width\n"
+		"'x' - input height\n"
+		"enter - show info";
+
+	msgBox = new MessageBox(msg, window.getSize(), &font);
+	infoBox = true;
+
+} // void App::showHelpBox();
+
 void App::newMap() {
 	genRequested = false;
 	solveRequested = false;
@@ -119,7 +134,7 @@ void App::newMap() {
 
 	for(int i = 0; i < options.width; i++) {
 		for(int j = 0; j < options.height; j++) {
-			grid.push_back(GridSquare(i, j, maze.mazeGrid[i + (options.width) * j].walls));
+			grid.push_back(GridSquare(i, j, maze.mazeGrid[i + options.width * j].walls));
 
 		} // for(int j = 0; j < options.height; j++);
 
@@ -140,7 +155,7 @@ void App::solve() {
 
 		for(int i = 0; i < options.width; i++) {
 			for(int j = 0; j < options.height; j++) {
-				grid.push_back(GridSquare(i, j, maze.mazeGrid[i + (options.width) * j].walls, maze.mazeGrid[i + options.width * j].inPath));
+				grid.push_back(GridSquare(i, j, maze.mazeGrid[i + options.width * j].walls, maze.mazeGrid[i + options.width * j].inPath));
 
 			} // for(int j = 0; j < options.height; j++);
 
