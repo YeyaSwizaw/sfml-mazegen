@@ -27,3 +27,5 @@ To use, simply run the program.
 - 's' solves the maze
 - 'w' shows width dialog
 - 'x' shows height dialog
+- '/' shows help dialog
+- 'enter' shows info box
