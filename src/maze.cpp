@@ -156,7 +156,7 @@ void Maze::doRecursiveBacktrack() {
 
 					availableNodes.push_back(availableNodes.back() - width);
 
-					// Successfull move
+					// Successful move
 					moved = true;
 					moving = true;
 
